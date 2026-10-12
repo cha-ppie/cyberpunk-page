@@ -121,18 +121,30 @@
         });
 
         if (!toggle || !panel) return;
-        toggle.addEventListener("click", function () {
-            var open = toggle.classList.toggle("is-open");
+
+        function setMenuOpen(open) {
+            toggle.classList.toggle("is-open", open);
             panel.classList.toggle("is-open", open);
             toggle.setAttribute("aria-expanded", String(open));
+            panel.setAttribute("aria-hidden", String(!open));
+            panel.inert = !open;
+        }
+
+        setMenuOpen(false);
+        toggle.addEventListener("click", function () {
+            setMenuOpen(!toggle.classList.contains("is-open"));
         });
 
         panel.querySelectorAll("a").forEach(function (link) {
             link.addEventListener("click", function () {
-                toggle.classList.remove("is-open");
-                panel.classList.remove("is-open");
-                toggle.setAttribute("aria-expanded", "false");
+                setMenuOpen(false);
             });
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key !== "Escape" || !toggle.classList.contains("is-open")) return;
+            setMenuOpen(false);
+            toggle.focus();
         });
     }
 

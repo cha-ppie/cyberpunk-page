@@ -326,10 +326,11 @@ svg {
     border-left: 1px solid rgba(252, 238, 9, 0.3);
     background: rgba(3, 5, 7, 0.98);
     transform: translateX(100%);
-    transition: transform 0.35s ease;
+    visibility: hidden;
+    transition: transform 0.35s ease, visibility 0s linear 0.35s;
 }
 
-.mobile-panel.is-open { transform: translateX(0); }
+.mobile-panel.is-open { visibility: visible; transform: translateX(0); transition: transform 0.35s ease, visibility 0s; }
 .mobile-nav { display: grid; gap: 0.45rem; }
 
 .mobile-nav a {
@@ -630,7 +631,7 @@ svg {
 .dispatch-note { color: var(--muted); font-size: 0.9rem; }
 .dispatch-note strong { display: block; margin-bottom: 0.75rem; color: var(--cyan); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; }
 .page-hero + .section { padding-top: 6rem; }
-.page-hero-content .page-lede { max-width: 48ch; }
+.page-hero-content .page-lede { max-width: 48ch; padding: 0.75rem 1rem; border-left: 2px solid var(--cyan); background: rgba(3, 5, 7, 0.84); color: var(--chrome); }
 .page-hero-content .page-title { max-width: 11ch; }
 
 .content-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin-top: 3rem; background: transparent; }
@@ -667,6 +668,8 @@ svg {
 .console-line { position: absolute; right: 2rem; bottom: 2rem; left: 2rem; height: 1px; background: var(--cyan); opacity: 0.7; }
 .console-line::after { position: absolute; right: 18%; bottom: 5px; width: 35%; height: 1px; background: var(--yellow); content: ""; }
 .system-copy h3 { margin: 0; color: var(--chrome); font-family: var(--display); font-size: clamp(1.8rem, 4vw, 3.4rem); font-weight: 700; line-height: 0.96; text-transform: uppercase; }
+.system-media { margin: 0 0 1.25rem; overflow: hidden; clip-path: var(--clip-md); background: var(--void); }
+.system-media img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; object-position: center 42%; filter: saturate(0.78) contrast(1.08) brightness(0.82); }
 .system-copy p { max-width: 52ch; margin: 1rem 0 0; color: var(--muted); font-size: 0.88rem; }
 
 .cast-card { padding: 0; }
