@@ -1,48 +1,42 @@
-\# CYBERPUNK NIGHTCITY WEB
+# CYBERPUNK NIGHTCITY WEB
 
-> 夜之城 · 静态前端展示网页 | Frontend Course Project
-
-
+> 夜之城 · Vue 3 前端展示站
 
 > 「The city of dreams.」
 
+## 项目简介
 
+以 Vue 3 重构的赛博朋克主题资料站，包含夜之城世界观、游戏系统、攻略流派、边缘行者专题与视觉档案。
 
-\## 项目简介
+## 技术栈
 
-基于原生HTML/CSS/JS开发的赛博朋克主题多页面网站。
+- Vue 3（Composition API）
+- Vue Router（Hash 路由，适配静态托管）
+- Vite
+- 原有 CSS、字体与本地图片资源
 
-包含夜之城世界观、赛博朋克2077游戏介绍、边缘行者专题、图片画廊等板块。
+## 目录说明
 
+- `src/views/`：六个页面视图
+- `src/components/`：公共页头、页脚和图标
+- `src/composables/`：滚动显现、首屏视差与背景粒子动效
+- `images/`、`fonts/`、`css/`：保留的本地资源与视觉样式
 
+## 本地运行
 
-\### 页面列表
+```powershell
+npm install
+npm run dev
+```
 
-\- `index.html` — 首页
+生产构建：
 
-\- `edgerunners.html` — 边缘行者专题
+```powershell
+npm run build
+```
 
-\- `game.html` — 游戏介绍
+构建产物位于 `dist/`。站内页面通过 Hash 路由访问，例如 `#/world`、`#/gallery`，可直接部署到 GitHub Pages 等静态托管服务。
 
-\- `world.html` — 夜之城世界观
+后续的 Vue、Spring Boot 和数据库实施计划见 [ROADMAP.md](ROADMAP.md)。
 
-\- `gallery.html` — 图片画廊
-
-\- `guide.html` — 指南
-
-
-
-\### 技术
-
-HTML5 / CSS3 / Vanilla JavaScript
-
-
-
-🔗 在线访问：https://cha-ppie.github.io/cyberpunk-page/index.html
-
-
-
-> ⚠️ 声明：项目仅用于课程作业学习，素材版权归原作者所有，非商用。
-
-
-
+> ⚠️ 项目仅用于课程作业学习，素材版权归原作者所有，非商用。
