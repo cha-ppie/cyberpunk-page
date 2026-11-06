@@ -1,29 +1,65 @@
 <script setup>
-import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import DossierEnd from '../components/DossierEnd.vue'
+import ArrowIcon from '../components/ArrowIcon.vue'
+import initialEntries from '../../content/gallery.json'
+import { useContent } from '../composables/useContent'
 import { imageUrl } from '../utils/assets'
 
-// 每项依次为图片地址、无障碍替代文本和灯箱标题。
-const entries = [
-  [imageUrl('characters/V.jpg'), 'V 的近景画面', 'V / city lights'], [imageUrl('characters/Judy.jpg'), 'Judy的角色画面', 'Judy / after dark'], [imageUrl('characters/Johnny Silver Hand.png'), 'Johnny Silver Hand的角色画面', 'Johnny / never fade away'], [imageUrl('city-photos/20260202000029_1.jpg'), '夜之城高架与人物剪影', 'Night City / transit line'], [imageUrl('city-photos/20260202105333_1.jpg'), '武器陈列墙', 'Weapons / loaded'], [imageUrl('city-photos/photomode_21012026_202313.png'), '雨夜中的人物小队', 'The crew / rainy ground'], [imageUrl('characters/Song Zhaomei.jpg'), '宋昭美的角色画面', 'Talia / chrome and gold'], [imageUrl('characters/Oda.jpg'), '小田的角色画面', 'Oda / high security'], [imageUrl('characters/Jack.png'), 'Jack的角色画面', 'Jackie / street legend'], [imageUrl('places/Panam.png'), 'Panam的角色画面', 'Panam / desert road'], [imageUrl('characters/Rogue.jpg'), 'Rogue的角色画面', 'Rogue / afterlife'], [imageUrl('characters/gallery (3).jpg'), '夜之城霓虹雨景', 'Night City / neon rain'], [imageUrl('characters/Johnny.png'), '义体改造展示', 'Cyberware / chrome'], [imageUrl('characters/Mobile Unit.jpg'), '义体改造展示', 'Cyberware / chrome'], [imageUrl('places/20260130104420_1.jpg'), '夜之城霓虹雨景', 'Night City / neon rain'], [imageUrl('places/20260202120930_1.jpg'), '义体改造展示', 'Cyberware / chrome'], [imageUrl('city-photos/c6cd9e72bbb54dc7f120dee6cf59b3bb.jpg'), '义体改造展示', 'Cyberware / chrome'], [imageUrl('places/20260616222833_1.jpg'), '夜之城霓虹雨景', 'Night City / neon rain']
-]
-const selected = ref(null)
+const entries = useContent('gallery', initialEntries, items => items.map(({ image, ...item }) => {
+  const { title } = item
+  const [name, description] = title.split(' / ')
+  const contextualPrefix = ['城市', '装备', '街头', '荒原', '义体'].includes(name)
+  return {
+    ...item, src: imageUrl(image),
+    captionTitle: description && contextualPrefix ? description : name,
+    captionPrefix: description && contextualPrefix ? name : '',
+    captionSuffix: description && !contextualPrefix ? description : ''
+  }
+}))
+const category = ref('全部')
+const categories = ['全部','人物','城市','装备']
+const visibleEntries = computed(() => entries.value.filter(item => category.value === '全部' || item.category === category.value))
+const selectedIndex = ref(null)
+const selected = computed(() => selectedIndex.value === null ? null : visibleEntries.value[selectedIndex.value])
+const viewer = ref(null)
 const closeButton = ref(null)
+let trigger
+let previousOverflow = ''
+watch(entries, () => { if (selectedIndex.value !== null) closeImage() })
 
-function closeLightbox() { selected.value = null }
-function handleKeydown(event) { if (event.key === 'Escape') closeLightbox() }
-
-// 灯箱打开后把焦点移到关闭按钮，方便键盘用户立即退出。
-watch(selected, async (item) => { if (item) { await nextTick(); closeButton.value?.focus() } })
-// 全局监听 Esc 关闭灯箱，并在组件卸载时清理监听。
-onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
-document.addEventListener('keydown', handleKeydown)
+async function openImage(index,event) {
+  trigger = event.currentTarget
+  previousOverflow = document.body.style.overflow
+  selectedIndex.value = index
+  document.body.style.overflow = 'hidden'
+  await nextTick()
+  viewer.value?.showModal()
+  closeButton.value?.focus()
+}
+function closeImage() {
+  viewer.value?.close()
+  selectedIndex.value = null
+  document.body.style.overflow = previousOverflow
+  nextTick(() => trigger?.focus())
+}
+function stepImage(direction) { selectedIndex.value = (selectedIndex.value + direction + visibleEntries.value.length) % visibleEntries.value.length }
+function handleViewerKey(event) {
+  if (event.key === 'ArrowLeft') { event.preventDefault(); stepImage(-1) }
+  if (event.key === 'ArrowRight') { event.preventDefault(); stepImage(1) }
+}
+function filterCategory(value) { if (selected.value) closeImage(); category.value = value }
+onBeforeUnmount(() => { if (selected.value) document.body.style.overflow = previousOverflow })
 </script>
 
 <template>
-  <main class="page-shell">
-    <section class="page-hero" aria-labelledby="page-title"><div class="page-hero-media" aria-hidden="true"><img src="/images/characters/gallery.jpg" alt=""></div><div class="page-hero-content"><h1 id="page-title" class="page-title glitch" data-text="NIGHT CITY">NIGHT CITY<span>视觉档案</span></h1><p class="page-lede">一座城市的记忆不会只留在地图上。它藏在脸、武器、车灯、雨水和每一块被霓虹擦亮的玻璃里。</p></div></section>
-    <section class="section section-soft"><div class="container"><h2 class="section-title">档案已<span>上线</span></h2><p class="section-description">选择任意画面打开全尺寸查看器。图片来自项目本地截图资源，按人物、场景与装备重新编排。</p><div class="gallery-grid"><button v-for="entry in entries" :key="entry[0]" class="gallery-item reveal" type="button" :data-caption="entry[2]" @click="selected = entry"><img :src="entry[0]" :alt="entry[1]"></button></div></div></section>
+  <main class="page-shell dossier archive-page">
+    <section class="archive-top" aria-labelledby="page-title"><div class="d-wrap archive-top-inner"><div><h1 id="page-title">CITY ARCHIVE</h1><h2>视觉档案</h2></div><p>脸孔、义体、街头的光。<br>把这座城市，重新看一遍。</p></div></section>
+    <section class="d-wrap d-section"><div class="archive-meta"><div class="archive-filters" role="group" aria-label="筛选视觉档案"><button v-for="value in categories" :key="value" type="button" :aria-pressed="category === value" @click="filterCategory(value)">{{ value }}</button></div><p class="archive-count" aria-live="polite">{{ visibleEntries.length }} 幅画面 · 点击查看大图</p></div>
+      <p v-if="!visibleEntries.length" role="status">该分类暂无已发布的图片。</p>
+      <div class="archive-wall"><button v-for="(entry,index) in visibleEntries" :key="entry.src" class="archive-photo" type="button" :aria-label="'查看大图：' + entry.title" @click="openImage(index,$event)"><img :src="entry.src" :alt="entry.alt" :width="entry.width" :height="entry.height" loading="lazy"><span class="archive-caption"><span v-if="entry.captionPrefix" class="archive-caption-context">{{ entry.captionPrefix }} / </span><span class="archive-caption-title">{{ entry.captionTitle }}</span><span v-if="entry.captionSuffix" class="archive-caption-context"> / {{ entry.captionSuffix }}</span></span></button></div>
+    </section>
+    <DossierEnd title="照片之外，还有故事。" description="走近那些让夜之城被记住的人。" to="/edgerunners" action="浏览边缘行者" />
   </main>
-  <!-- 点击遮罩本身或按 Esc 可关闭灯箱，点击图片不会触发关闭。 -->
-  <div v-if="selected" class="lightbox is-open" role="dialog" aria-modal="true" aria-label="图片查看器" @click.self="closeLightbox"><button ref="closeButton" class="lightbox-close" type="button" @click="closeLightbox">关闭 / CLOSE</button><img :src="selected[0]" :alt="selected[1]"><span class="lightbox-caption">{{ selected[2] }}</span></div>
+  <Teleport to="body"><dialog v-if="selected" ref="viewer" class="archive-dialog" aria-label="图片查看器" aria-describedby="image-caption" @cancel.prevent="closeImage" @click.self="closeImage" @keydown="handleViewerKey"><button ref="closeButton" class="archive-close" type="button" @click="closeImage">关闭 ×</button><button class="archive-prev" type="button" aria-label="上一张" @click="stepImage(-1)"><ArrowIcon style="transform: rotate(180deg)" /></button><img :src="selected.src" :alt="selected.alt"><p id="image-caption">{{ selected.title }} · {{ selectedIndex + 1 }} / {{ visibleEntries.length }}</p><button class="archive-next" type="button" aria-label="下一张" @click="stepImage(1)"><ArrowIcon /></button></dialog></Teleport>
 </template>

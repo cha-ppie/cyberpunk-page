@@ -1,38 +1,19 @@
 <script setup>
-import { nextTick, onBeforeUnmount, watch } from 'vue'
+import { watch } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
-import { useVisualEffects } from './composables/useVisualEffects'
 
 const route = useRoute()
-const { refreshPageEffects, stopPageEffects, startAmbient, stopAmbient } = useVisualEffects()
-
-// 背景粒子属于整个站点，只需在根组件创建时启动一次。
-startAmbient()
-
-// 路由切换后同步页面主题和标题，并等待新页面渲染完成后重新绑定视觉动效。
-watch(
-  () => route.fullPath,
-  async () => {
-    document.body.dataset.theme = route.meta.theme || 'home'
-    document.title = route.meta.title || 'Syberpunk / 夜之城资料站'
-    await nextTick()
-    refreshPageEffects()
-  },
-  { immediate: true }
-)
-
-onBeforeUnmount(() => {
-  // 释放观察器、动画帧和事件监听，避免热更新或卸载后重复运行。
-  stopPageEffects()
-  stopAmbient()
-})
+// 所有页面使用可直接阅读的内容，不再启动循环背景粒子或隐藏式入场动画。
+watch(() => route.fullPath, () => {
+  document.body.dataset.theme = route.meta.theme || 'home'
+  document.title = route.meta.title || 'Cyberpunk / 夜之城资料站'
+}, { immediate: true })
 </script>
 
 <template>
-  <!-- 页头和页脚由所有路由共享，中间区域由当前路由组件填充。 -->
-  <AppHeader />
+  <AppHeader v-if="!route.meta.admin" />
   <RouterView />
-  <AppFooter />
+  <AppFooter v-if="!route.meta.admin" />
 </template>

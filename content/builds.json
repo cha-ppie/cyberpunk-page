@@ -1,0 +1,104 @@
+[
+  {
+    "id": "netrunner",
+    "english": "NETRUNNER",
+    "name": "纯网络黑客",
+    "approach": "在交火之前，接管战场。",
+    "description": "以快速破解为主要输出，利用 RAM 和摄像头控制战场。先观察，再决定从哪里打破僵局。",
+    "attributes": "智力 · 技术 · 镇定",
+    "equipment": "网络接入仓、快速破解、智能武器",
+    "steps": [
+      "侦察敌人",
+      "接入摄像头",
+      "破解与控场"
+    ],
+    "mixing": "保留快速破解作为开场，把清理残敌交给你顺手的枪械。控场与火力可以一起上场。",
+    "image": "game-media/guide-camera-quickhack.webp",
+    "alt": "扫描器锁定后门摄像头，界面显示可用快速破解和 RAM 消耗"
+  },
+  {
+    "id": "samurai",
+    "english": "CYBER SAMURAI",
+    "name": "反应武士",
+    "approach": "让交火，变成你的近身距离。",
+    "description": "武士刀、Sandevistan、冲刺和空中位移。切入、斩击、离场，整套循环像一段压缩过的时间。",
+    "attributes": "反应 · 肉体 · 镇定",
+    "equipment": "武士刀、Sandevistan、机动义体",
+    "steps": [
+      "寻找切入点",
+      "减速时间",
+      "近战收尾"
+    ],
+    "mixing": "刀剑负责近身，枪械补上够不到的距离。先练顺切入与撤离，再决定把多少资源交给近战。",
+    "image": "game-media/guide-katana-combat.jpg",
+    "alt": "第一人称视角下，热能武士刀的红色刀刃横扫近处的敌人"
+  },
+  {
+    "id": "hitman",
+    "english": "HITMAN",
+    "name": "潜行枪手",
+    "approach": "留在阴影里，把握第一枪。",
+    "description": "消音手枪配合光学迷彩。观察巡逻、选择角度，给每次出手留下一条脱离视线的路线。",
+    "attributes": "镇定 · 反应 · 智力",
+    "equipment": "消音手枪、光学迷彩",
+    "steps": [
+      "观察巡逻",
+      "消音击杀",
+      "脱离视线"
+    ],
+    "mixing": "潜行是接敌方式，也能成为正面交火前的准备。带一把熟悉的备用武器，应对计划之外的遭遇。",
+    "image": "game-media/guide-her-majesty.jpg",
+    "alt": "安装消音器的赫尔陛下手枪"
+  },
+  {
+    "id": "berserk",
+    "english": "BERSERK",
+    "name": "狂暴战士",
+    "approach": "不等机会，直接打开缺口。",
+    "description": "大猩猩手臂与狂暴操作系统配合。正面进入，在近距离持续施压，把战斗拉进自己的节奏。",
+    "attributes": "肉体 · 技术 · 反应",
+    "equipment": "大猩猩手臂、狂暴操作系统",
+    "steps": [
+      "开启狂暴",
+      "正面接敌",
+      "持续近战"
+    ],
+    "mixing": "把近战作为突破口，再用你熟悉的远程武器补位。为下一次冲入人群留好退路。",
+    "image": "game-media/guide-gorilla-arms-combat.jpg",
+    "alt": "玩家抬起义体双拳，迎战拳台上逼近的对手"
+  },
+  {
+    "id": "tech",
+    "english": "TECH RUNNER",
+    "name": "震撼科技兵",
+    "approach": "把掩体，变成下一次瞄准。",
+    "description": "围绕科技武器与技术专长搭配。先选好站位，再用蓄力射击处理藏在掩体后的目标。",
+    "attributes": "技术 · 肉体 · 反应",
+    "equipment": "科技武器、技术专长",
+    "steps": [
+      "占据掩体",
+      "蓄力射击",
+      "调整位置"
+    ],
+    "mixing": "保留科技武器处理掩体，再搭配一件适合近身应急的装备。让武器各自解决一个距离的问题。",
+    "image": "game-media/guide-nekomata-scope.jpg",
+    "alt": "通过猫又科技狙击步枪的蓝色瞄准镜瞄向远处的敌人"
+  },
+  {
+    "id": "smart",
+    "english": "SMART GUNNER",
+    "name": "智能武器专家",
+    "approach": "让武器追踪，把注意力留给走位。",
+    "description": "智能武器配合快速破解。削弱敌方防御，判断位置，在移动中保持输出。",
+    "attributes": "智力 · 反应 · 肉体",
+    "equipment": "智能连接、智能武器、快速破解",
+    "steps": [
+      "锁定目标",
+      "破解削弱",
+      "持续输出"
+    ],
+    "mixing": "快速破解可以辅助，也可以成为主攻。按你更喜欢走位射击还是远程控场，调整两者的投入。",
+    "image": "game-media/guide-smart-fire.jpg",
+    "alt": "戴头盔的枪手举起智能武器开火"
+  }
+]

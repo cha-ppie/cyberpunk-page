@@ -1,0 +1,65 @@
+[
+  {
+    "id": "watson",
+    "name": "沃森",
+    "english": "Watson",
+    "description": "工业、贫民区和义体诊所并存的旧城区。歌舞伎町的灯光从不真正熄灭。",
+    "label": "旧城",
+    "scene": "歌舞伎町街道与红色鸟居",
+    "image": "game-media/watson.jpg"
+  },
+  {
+    "id": "city-center",
+    "name": "市中心",
+    "english": "City Center",
+    "description": "企业广场与纪念碑式高楼的核心区域。这里的空气和规则都由公司过滤。",
+    "label": "企业",
+    "scene": "从企业广场仰望高楼",
+    "image": "game-media/city-center.jpg"
+  },
+  {
+    "id": "westbrook",
+    "name": "威斯布鲁克",
+    "english": "Westbrook",
+    "description": "日本街、豪华酒店和虎爪帮势力交错，消费与危险只隔一面霓虹招牌。",
+    "label": "霓虹",
+    "scene": "威斯布鲁克高楼间的广告招牌",
+    "image": "game-media/westbrook.jpg"
+  },
+  {
+    "id": "heywood",
+    "name": "海伍德",
+    "english": "Heywood",
+    "description": "社区、街头家族和瓦伦蒂诺帮的地盘。这里的人记得你的名字。",
+    "label": "街区",
+    "scene": "格伦街区的店铺与行人",
+    "image": "game-media/heywood.jpg"
+  },
+  {
+    "id": "santo-domingo",
+    "name": "圣多明戈",
+    "english": "Santo Domingo",
+    "description": "发电厂、工厂和六街帮的工业腹地，城市的机器心脏在这里发热。",
+    "label": "工业",
+    "scene": "科罗纳多农场的电塔与工业天际线",
+    "image": "game-media/santo-domingo.jpg"
+  },
+  {
+    "id": "pacifica",
+    "name": "太平洲",
+    "english": "Pacifica",
+    "description": "被遗弃的度假区，巫毒男孩在旧网络边缘守着自己的秘密。",
+    "label": "边界",
+    "scene": "太平洲积水的街道与废弃车辆",
+    "image": "game-media/pacifica.jpg"
+  },
+  {
+    "id": "badlands",
+    "name": "荒原",
+    "english": "Badlands",
+    "description": "城市之外的沙尘与公路。流浪者家族在这里用引擎声维持自由。",
+    "label": "废土",
+    "scene": "东部荒原的营地和通信塔",
+    "image": "game-media/badlands.jpg"
+  }
+]

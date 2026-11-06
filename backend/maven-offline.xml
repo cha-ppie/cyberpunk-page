@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0">
+  <offline>true</offline>
+  <!-- 兼容本机缓存中的 central / aliyunmaven 来源标记；离线模式禁止网络请求。 -->
+  <profiles><profile><id>existing-cache</id>
+    <repositories><repository><id>aliyunmaven</id><url>https://maven.aliyun.com/repository/public</url></repository></repositories>
+    <pluginRepositories><pluginRepository><id>aliyunmaven</id><url>https://maven.aliyun.com/repository/public</url></pluginRepository></pluginRepositories>
+  </profile></profiles>
+  <activeProfiles><activeProfile>existing-cache</activeProfile></activeProfiles>
+</settings>

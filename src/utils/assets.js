@@ -1,5 +1,5 @@
-// 让 Vite 在构建阶段收集 images 目录中的资源，并返回最终可访问的 URL。
-const images = import.meta.glob('../../images/**/*', {
+// 页面位图交由 Vite 收集；撕边 SVG 由对应 CSS 单独引入。
+const images = import.meta.glob('../../images/**/*.{jpg,jpeg,png,webp,avif}', {
   eager: true,
   import: 'default',
   query: '?url'

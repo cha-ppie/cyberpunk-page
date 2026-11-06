@@ -673,8 +673,9 @@ svg {
 .system-copy p { max-width: 52ch; margin: 1rem 0 0; color: var(--muted); font-size: 0.88rem; }
 
 .cast-card { padding: 0; }
-.cast-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; filter: saturate(0.72) contrast(1.1) brightness(0.7); transition: transform 0.8s ease, filter 0.8s ease; }
-.cast-card:hover img { filter: saturate(1) contrast(1.05) brightness(0.86); transform: scale(1.04); }
+/* 角色原图为竖幅海报，完整展示头像；横幅素材在同一画框内等比留边。 */
+.cast-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: var(--void); filter: saturate(0.9) contrast(1.05) brightness(0.9); transition: filter 0.8s ease; }
+.cast-card:hover img { filter: saturate(1) contrast(1.05) brightness(1); }
 .cast-card-body { padding: 1.3rem 1.4rem 1.5rem; }
 .cast-card-body p { margin-top: 0.55rem; }
 .build-row { grid-template-columns: 160px minmax(0, 1fr) minmax(0, 1.25fr) auto; }

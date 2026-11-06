@@ -1,0 +1,77 @@
+/* A playable direction gets a scene, a loadout and a sequence; no closed dossier wall. */
+.build-explorer { padding-bottom: 110px; }
+.build-explorer-heading { display: flex; align-items: end; justify-content: space-between; gap: 50px; margin-bottom: 42px; }
+.build-explorer-heading h2 { flex-shrink: 0; }
+.build-explorer-heading p { max-width: 35ch; font-size: 15px; color: var(--d-muted); }
+.build-choices { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin-bottom: 38px; border-bottom: 1px solid #46515a; }
+.build-choices button { position: relative; isolation: isolate; min-width: 0; padding: 19px 14px 22px; text-align: left; color: var(--d-paper); border: 0; background: transparent; cursor: pointer; }
+.build-choices button::before { content: ''; position: absolute; z-index: -1; inset: 0 0 -1px; background: var(--yellow); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%); opacity: 0; }
+.build-choices button[aria-selected='true'] { color: var(--void); }
+.build-choices button[aria-selected='true']::before { opacity: 1; }
+.build-choices button:hover:not([aria-selected='true']) { color: var(--yellow); }
+.build-choices button span { display: block; font: 600 clamp(16px, 1.6vw, 22px)/1.2 var(--display); letter-spacing: -.015em; }
+.build-choices button strong { display: block; margin-top: 9px; font-size: clamp(16px, 1.45vw, 20px); font-weight: 600; }
+.build-choices button:focus-visible { z-index: 1; }
+.build-panel:focus-visible { outline: 3px solid var(--cyan); outline-offset: 8px; }
+.build-feature { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.build-scene {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    min-width: 0;
+    background: var(--void);
+}
+.build-scene img {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.build-approach { padding: 12px 0 25px; }
+.build-approach h3 { font-size: clamp(30px, 3vw, 44px); color: var(--yellow); }
+.build-approach .build-approach-line { font-size: clamp(19px, 1.6vw, 23px); font-weight: 600; line-height: 1.6; margin-top: 22px; max-width: 21ch; }
+.build-approach .build-description { margin-top: 18px; font-size: 15px; color: var(--d-muted); max-width: 38ch; }
+.build-loadout { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 24px; row-gap: 18px; margin: 30px 0 0; padding-top: 24px; border-top: 1px solid #3a454d; font-size: 14px; line-height: 1.8; }
+.build-loadout dt { color: var(--d-muted); }
+.build-loadout dd { margin: 0; }
+.build-sequence { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 45px; padding: 28px 32px; margin-top: 30px; background: var(--yellow); color: var(--void); }
+.build-sequence h4 { margin: 0; font-size: 16px; font-weight: 700; }
+.build-sequence ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; list-style: decimal-leading-zero; margin: 0; padding-left: 25px; }
+.build-sequence li { padding-left: 4px; font-size: clamp(17px, 1.6vw, 22px); font-weight: 600; line-height: 1.5; }
+.build-sequence li::marker { font: 600 18px var(--display); }
+.build-explorer .build-mixing { margin-top: 27px; max-width: 75ch; color: var(--d-muted); font-size: 14px; }
+.build-mixing strong { color: var(--d-paper); font-weight: 600; margin-right: 10px; }
+
+@media (max-width: 1100px) {
+    .build-explorer-heading { gap: 30px; }
+    .build-explorer-heading p { max-width: 29ch; }
+    .build-choices { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .build-choices button { border-bottom: 1px solid #343f47; }
+    .build-feature { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 30px; }
+    .build-loadout { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .build-loadout dd + dt { margin-top: 12px; }
+    .build-sequence { gap: 25px; padding-inline: 24px; }
+    .build-sequence ol { gap: 20px; }
+}
+
+@media (max-width: 760px) {
+    .build-explorer { padding-bottom: 75px; }
+    .build-explorer-heading { display: block; margin-bottom: 28px; }
+    .build-explorer-heading p { margin-top: 18px; max-width: 36ch; font-size: 14px; }
+    .build-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 25px; }
+    .build-choices button { padding: 15px 10px 18px; }
+    .build-choices button span { font-size: 17px; }
+    .build-choices button strong { font-size: 16px; margin-top: 7px; }
+    .build-feature { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+    .build-approach { padding: 0; }
+    .build-approach h3 { font-size: 30px; }
+    .build-approach .build-approach-line { margin-top: 17px; font-size: 19px; max-width: 27ch; }
+    .build-approach .build-description { font-size: 14px; }
+    .build-loadout { grid-template-columns: auto minmax(0, 1fr); gap: 14px 20px; margin-top: 24px; }
+    .build-loadout dd + dt { margin-top: 0; }
+    .build-sequence { grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 28px; padding: 24px; }
+    .build-sequence ol { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .build-sequence li { font-size: 19px; }
+    .build-explorer .build-mixing { margin-top: 22px; }
+}

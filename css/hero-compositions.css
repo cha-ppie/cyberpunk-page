@@ -1,0 +1,206 @@
+/* One material language, four compositions. Masks never contain readable content. */
+.d-hero-content { position: relative; }
+.d-hero-copy p { max-width: 36ch; }
+.d-hero--world,
+.d-hero--game,
+.d-hero--guide { padding: 0; }
+.d-hero--world .rupture-scars,
+.d-hero--game .rupture-scars,
+.d-hero--guide .rupture-scars { display: none; }
+
+/* WORLD — the street fills the frame; the yellow sheet breaks across the horizon. */
+.d-hero--world { background: var(--void); min-height: 740px; }
+.d-hero--world .d-hero-image { inset: var(--header-height) 0 105px; }
+.d-hero--world .d-hero-image::after { position: absolute; inset: 0; content: ''; background: linear-gradient(180deg, transparent 20%, #030507a8 100%); }
+.d-hero--world .d-hero-content { padding-top: calc(var(--header-height) + 48px); }
+.d-hero--world .d-hero-content h1 { max-width: 100%; min-height: 388px; display: flex; align-items: flex-end; white-space: normal; color: var(--yellow); font-size: clamp(110px, 16vw, 235px); padding: 0 0 38px; line-height: .78; text-shadow: 0 3px 28px #03050766; }
+.d-hero--world .d-hero-copy { min-height: 224px; padding-block: 75px 35px; display: grid; grid-template-columns: .8fr 1.2fr auto; align-items: center; gap: 32px; }
+.d-hero--world .d-hero-copy h2,
+.d-hero--world .d-hero-copy p,
+.d-hero--world .d-action { margin: 0; }
+.d-hero--world .d-hero-copy h2 { font-size: 30px; }
+.d-hero--world .d-hero-copy p { max-width: 45ch; }
+.d-hero--world .hero-rupture { inset: auto 0 0; width: 100%; height: 245px; overflow: visible; }
+.d-hero--world .hero-rupture::before,
+.d-hero--world .hero-rupture::after,
+.d-hero--world .rupture-underprint {
+    -webkit-mask: var(--tear-a) top / 100% 95px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 93px) no-repeat;
+    mask: var(--tear-a) top / 100% 95px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 93px) no-repeat;
+}
+.d-hero--world .hero-rupture::before { background: #030507; transform: translateY(-10px); }
+.d-hero--world .rupture-underprint { transform: translate(-3px, -4px); }
+.d-hero--world .hero-rupture::after { transform: none; }
+.d-hero--world::after { display: none; }
+
+/* GAME — black negative space, an image rising through the type, an exposed yellow backing. */
+.d-hero--game { min-height: 800px; background: var(--void); color: var(--d-paper); }
+.d-hero--game .d-hero-content { padding-block: calc(var(--header-height) + 62px) 100px; }
+.d-hero--game .d-hero-content h1 { max-width: 80%; font-size: clamp(100px, 12vw, 180px); color: var(--yellow); line-height: .86; padding-bottom: 0; }
+.d-hero--game .d-hero-copy { margin-top: 38px; max-width: 31%; }
+.d-hero--game .d-hero-copy h2 { margin-top: 0; }
+.d-hero--game .d-hero-copy p { max-width: none; font-weight: 400; color: var(--d-muted); }
+.d-hero--game .d-action { background: var(--yellow); color: var(--void); }
+.d-hero--game a:focus-visible { outline-color: var(--cyan); }
+.d-hero--game .d-hero-image { inset: 160px 0 55px 33%; z-index: -1;
+    -webkit-mask: var(--tear-diagonal) top / 100% 150px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 148px) no-repeat;
+    mask: var(--tear-diagonal) top / 100% 150px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 148px) no-repeat;
+}
+.d-hero--game .d-hero-image img { filter: brightness(1.35); }
+.d-hero--game .d-hero-image::after { position: absolute; inset: 0; content: ''; background: linear-gradient(90deg, #0305079c, transparent 30%); }
+.d-hero--game .hero-rupture { z-index: -2; inset: 155px -3px 58px calc(33% + 3px); width: auto; height: auto; overflow: visible; }
+.d-hero--game .hero-rupture::before,
+.d-hero--game .hero-rupture::after,
+.d-hero--game .rupture-underprint {
+    -webkit-mask: var(--tear-diagonal) top / 100% 150px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 148px) no-repeat;
+    mask: var(--tear-diagonal) top / 100% 150px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 148px) no-repeat;
+}
+.d-hero--game .hero-rupture::before { transform: translateY(-3px); }
+.d-hero--game .rupture-underprint { transform: translate(-3px, -3px); }
+.d-hero--game .hero-rupture::after { transform: none; }
+.d-hero--game::after { bottom: 50px; height: 85px; -webkit-mask-image: var(--tear-b); mask-image: var(--tear-b); }
+
+/* GUIDE — a yellow broadside, with the weapons print pasted below the headline. */
+.d-hero--guide { min-height: 790px; }
+.d-hero--guide .d-hero-content { padding-block: calc(var(--header-height) + 63px) 90px; display: grid; grid-template-columns: 1.45fr 1fr; column-gap: 65px; }
+.d-hero--guide .d-hero-content h1 { grid-column: 1 / -1; max-width: 100%; white-space: normal; font-size: clamp(96px, 11.7vw, 176px); line-height: .9; padding-bottom: 0; }
+.d-hero--guide .d-hero-copy { grid-column: 2; margin-top: 114px; padding-left: 10px; }
+.d-hero--guide .d-hero-copy h2 { margin-top: 0; font-size: 32px; }
+.d-hero--guide .d-hero-copy p { max-width: 30ch; }
+.d-hero--guide .d-hero-image { inset: 320px 38% 0 0; z-index: -1;
+    -webkit-mask: var(--tear-side) 0 0 / 100% 100% no-repeat;
+    mask: var(--tear-side) 0 0 / 100% 100% no-repeat;
+}
+.d-hero--guide .d-hero-image img { object-position: 45% center !important; }
+.d-hero--guide .hero-rupture { z-index: -2; inset: 320px 38% 0 0; width: auto; overflow: visible; }
+.d-hero--guide .hero-rupture::before { background: var(--void); transform: translate(11px, -5px); }
+.d-hero--guide .hero-rupture::after { background: var(--tear-underprint); transform: translate(5px, -2px); }
+.d-hero--guide .rupture-underprint { display: none; }
+.d-hero--guide::after { height: 75px; -webkit-mask-image: var(--tear-diagonal); mask-image: var(--tear-diagonal); }
+
+/* SERIES — the artwork is the opening, rather than a second generic scenic hero. */
+.series-masthead { padding-top: calc(var(--header-height) + 50px); }
+.series-masthead h1 { font: italic 700 clamp(92px, 12.5vw, 186px)/.88 var(--display); letter-spacing: -.055em; color: var(--d-paper); }
+.series-heading-copy { display: flex; align-items: baseline; justify-content: space-between; gap: 40px; margin-top: 27px; }
+.series-heading-copy h2 { font-size: 22px; flex-shrink: 0; }
+.series-heading-copy p { font-size: 14px; color: var(--d-muted); }
+.series-works { padding-top: 34px; padding-bottom: 100px; }
+.series-works .series-tabs { width: min(540px, 100%); margin-bottom: 25px; border-bottom: 1px solid #4d5b65; }
+.series-works .series-tabs button { font-size: 20px; padding: 16px 18px; }
+.series-intro { --series-tear-top: 30px; --series-tear-height: 130px; position: relative; isolation: isolate; grid-template-columns: minmax(0, .85fr) minmax(0, 1fr); gap: 80px; padding: 10px 7% 35px; margin-bottom: 130px; }
+.series-intro::before,
+.series-intro::after { content: ''; position: absolute; z-index: -1; inset: var(--series-tear-top) -48px 0 25%; pointer-events: none;
+    -webkit-mask: var(--tear-diagonal) top / 100% var(--series-tear-height) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - var(--series-tear-height) + 2px) no-repeat;
+    mask: var(--tear-diagonal) top / 100% var(--series-tear-height) no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - var(--series-tear-height) + 2px) no-repeat;
+}
+.series-intro::before { background: var(--tear-underprint); transform: translate(-5px, -5px); }
+.series-intro::after { background: var(--yellow); }
+.series-intro .series-poster { width: 100%; max-width: 380px; justify-self: center; background: transparent; }
+/* Auto-size both axes so the height cap cannot leave transparent contain gutters. */
+.series-intro .series-poster img { display: block; width: auto; max-width: 100%; max-height: 535px; height: auto; margin-inline: auto; box-shadow: 14px 16px 0 #030507; }
+/* Reserve the whole torn band before copy; centering can lift the status into a cutout. */
+.series-story { align-self: start; padding-top: calc(var(--series-tear-top) + var(--series-tear-height) + 24px); color: var(--void); }
+.series-intro .series-status { color: var(--void); font-weight: 700; }
+.series-intro h2 { font-size: clamp(34px, 3.4vw, 52px); max-width: 9em; white-space: pre-line; }
+.series-intro p { color: #252610; margin-top: 20px; max-width: 38ch; }
+.series-intro .d-link { color: var(--void); }
+.series-story a:focus-visible { outline-color: var(--void); }
+
+@media (max-width: 1100px) {
+    .d-hero--world .d-hero-copy { grid-template-columns: .8fr 1.3fr; gap: 18px 32px; padding-top: 65px; }
+    .d-hero--world .d-action { grid-column: 2; justify-self: start; }
+    .d-hero--world .hero-rupture { height: 285px; }
+    .d-hero--world .d-hero-content h1 { min-height: 350px; }
+    .d-hero--game { min-height: 760px; }
+    .d-hero--game .d-hero-copy { max-width: 36%; }
+    .d-hero--game .d-hero-image { left: 35%; }
+    .d-hero--game .hero-rupture { left: calc(35% + 3px); }
+    .d-hero--guide { min-height: 740px; }
+    .d-hero--guide .d-hero-content { column-gap: 35px; }
+    .d-hero--guide .d-hero-copy { margin-top: 100px; }
+    .d-hero--guide .d-hero-image, .d-hero--guide .hero-rupture { top: 285px; right: 40%; }
+    .guide-intro h2 { font-size: clamp(30px, 3.8vw, 42px); }
+    .series-heading-copy { gap: 25px; }
+    .series-heading-copy p { max-width: 32ch; }
+    .series-intro { gap: 45px; padding-inline: 2%; }
+    .series-intro::before, .series-intro::after { right: -32px; }
+}
+
+@media (max-width: 760px) {
+    /* Panoramic city, then a horizontal sheet. */
+    .d-hero--world { min-height: 0; }
+    .d-hero--world .d-hero-content { padding-top: calc(var(--header-height) + 30px); }
+    .d-hero--world .d-hero-content h1 { display: block; min-height: 340px; padding: 90px 0 55px; white-space: pre-line; font-size: clamp(94px, 21vw, 155px); line-height: .82; }
+    .d-hero--world .d-hero-image { inset: var(--header-height) 0 200px; height: auto; }
+    .d-hero--world .d-hero-copy { display: block; padding-block: 65px 38px; min-height: 0; }
+    .d-hero--world .d-hero-copy h2 { font-size: 26px; }
+    .d-hero--world .d-hero-copy p { margin-top: 13px; }
+    .d-hero--world .d-action { margin-top: 20px; }
+    .d-hero--world .hero-rupture { inset: auto 0 0; height: 310px; width: 100%; }
+    .d-hero--world .hero-rupture::before,
+    .d-hero--world .hero-rupture::after,
+    .d-hero--world .rupture-underprint {
+        -webkit-mask: var(--tear-a) top / 100% 65px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 63px) no-repeat;
+        mask: var(--tear-a) top / 100% 65px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 63px) no-repeat;
+    }
+    .d-hero--world .hero-rupture::before { transform: translateY(-8px); }
+    .d-hero--world .rupture-underprint { transform: translate(-2px, -3px); }
+    .d-hero--world .hero-rupture::after { transform: none; }
+
+    /* Type comes first; V owns a separate rising photographic cut. */
+    .d-hero--game { --game-title-size: clamp(70px, 16vw, 118px); min-height: 0; padding-bottom: 0; }
+    .d-hero--game .d-hero-content { padding-block: calc(var(--header-height) + 40px) 45px; }
+    .d-hero--game .d-hero-content h1 { max-width: 100%; font-size: var(--game-title-size); line-height: .84; }
+    .d-hero--game .d-hero-copy { max-width: 100%; margin-top: 360px; }
+    .d-hero--game .d-hero-copy h2 { font-size: 26px; }
+    .d-hero--game .d-hero-copy p { max-width: 38ch; }
+    .d-hero--game .d-action { margin: 20px 0 0; }
+    .d-hero--game .d-hero-image { inset: calc(var(--header-height) + 60px + var(--game-title-size) * 1.72) 0 auto 10%; height: 310px;
+        -webkit-mask-size: 100% 75px, 100% calc(100% - 73px);
+        mask-size: 100% 75px, 100% calc(100% - 73px);
+    }
+    .d-hero--game .hero-rupture { inset: calc(var(--header-height) + 55px + var(--game-title-size) * 1.72) -3px auto calc(10% + 3px); height: 310px; width: auto; }
+    .d-hero--game .hero-rupture::before,
+    .d-hero--game .hero-rupture::after,
+    .d-hero--game .rupture-underprint {
+        -webkit-mask: var(--tear-diagonal) top / 100% 75px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 73px) no-repeat;
+        mask: var(--tear-diagonal) top / 100% 75px no-repeat, linear-gradient(#000, #000) bottom / 100% calc(100% - 73px) no-repeat;
+    }
+    .d-hero--game .hero-rupture::before { transform: translateY(-3px); }
+    .d-hero--game .rupture-underprint { transform: translate(-2px, -2px); }
+    .d-hero--game .hero-rupture::after { transform: none; }
+    .d-hero--game::after { display: none; }
+
+    /* A broad yellow headline above a left-anchored pasted weapons print. */
+    .d-hero--guide { --guide-title-size: clamp(72px, 15.5vw, 116px); min-height: 0; }
+    .d-hero--guide .d-hero-content { display: block; padding-block: calc(var(--header-height) + 38px) 65px; }
+    .d-hero--guide .d-hero-content h1 { white-space: pre-line; font-size: var(--guide-title-size); line-height: .86; }
+    .d-hero--guide .d-hero-copy { padding-left: 0; margin-top: 302px; }
+    .d-hero--guide .d-hero-copy h2 { font-size: 26px; }
+    .d-hero--guide .d-hero-copy p { max-width: 37ch; }
+    .d-hero--guide .d-action { margin: 20px 0 12px; }
+    .d-hero--guide .d-hero-image,
+    .d-hero--guide .hero-rupture { inset: calc(var(--header-height) + 65px + var(--guide-title-size) * 1.72) 5% auto 0; width: auto; height: 250px; }
+    .d-hero--guide .hero-rupture::before,
+    .d-hero--guide .hero-rupture::after { -webkit-mask-image: var(--tear-side); mask-image: var(--tear-side); }
+    .d-hero--guide .hero-rupture::before { transform: translate(8px, -4px); }
+    .d-hero--guide .hero-rupture::after { transform: translate(4px, -2px); }
+    .d-hero--guide::after { height: 45px; }
+
+    /* The poster stays whole; the yellow story sheet starts behind its bottom edge. */
+    .series-masthead { padding-top: calc(var(--header-height) + 38px); }
+    .series-masthead h1 { font-size: clamp(74px, 17vw, 128px); line-height: .84; }
+    .series-masthead h1 span { display: block; }
+    .series-heading-copy { display: block; margin-top: 25px; }
+    .series-heading-copy h2 { font-size: 21px; }
+    .series-heading-copy p { max-width: 38ch; margin-top: 14px; }
+    .series-works { padding-top: 25px; padding-bottom: 65px; }
+    .series-works .series-tabs { margin-bottom: 25px; }
+    .series-works .series-tabs button { font-size: 16px; padding-inline: 8px; }
+    .series-intro { grid-template-columns: minmax(0, 1fr); padding: 0 0 30px; gap: 35px; margin-bottom: 85px; }
+    .series-intro::before, .series-intro::after { inset: 185px -20px 0; -webkit-mask-size: 100% 90px, 100% calc(100% - 88px); mask-size: 100% 90px, 100% calc(100% - 88px); }
+    .series-intro .series-poster { max-width: 340px; width: calc(100% - 20px); }
+    .series-intro .series-poster img { max-height: none; box-shadow: 10px 12px 0 var(--void); }
+    .series-story { padding-top: 0; }
+    .series-intro h2 { font-size: 34px; }
+    .series-intro p { max-width: 39ch; }
+}

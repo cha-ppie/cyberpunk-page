@@ -1,0 +1,128 @@
+/* Multi-scale tears: long gouges, fine chips, detached splinters and offset ink.
+   Only decorative surfaces are masked. Text, focus rings and hit areas stay intact. */
+:root {
+    --tear-a: url('../images/edges/tear-a.svg');
+    --tear-b: url('../images/edges/tear-b.svg');
+    --tear-diagonal: url('../images/edges/tear-diagonal.svg');
+    --tear-side: url('../images/edges/tear-side.svg');
+    --tear-scars: url('../images/edges/tear-scars.svg');
+    --tear-band: url('../images/edges/tear-band.svg');
+    --tear-underprint: #989016;
+}
+
+/* The main side rupture, including its thin exposed backing and sparse face scratches. */
+.d-hero::before { display: none; }
+.hero-rupture { position: absolute; inset: 0 auto 0 0; z-index: -1; width: 56%; overflow: hidden; pointer-events: none; }
+.hero-rupture::before,
+.hero-rupture::after,
+.rupture-underprint,
+.rupture-scars {
+    position: absolute;
+    inset: 0;
+    content: '';
+    -webkit-mask: var(--tear-side) 0 0 / 100% 100% no-repeat;
+    mask: var(--tear-side) 0 0 / 100% 100% no-repeat;
+}
+.hero-rupture::before { background: var(--void); transform: translate(13px, 7px); }
+.rupture-underprint { background: var(--tear-underprint); transform: translate(5px, 2px); }
+.hero-rupture::after { background: var(--yellow); }
+.rupture-scars { z-index: 1; background: #22250c; opacity: .7; -webkit-mask-image: var(--tear-scars); mask-image: var(--tear-scars); }
+.d-hero::after {
+    height: 96px;
+    clip-path: none;
+    pointer-events: none;
+    -webkit-mask: var(--tear-a) 0 0 / 100% 100% no-repeat;
+    mask: var(--tear-a) 0 0 / 100% 100% no-repeat;
+}
+
+/* Large chapter transitions expose a few pixels of backing, with no repeating texture. */
+.d-end::before,
+.d-end::after {
+    position: absolute;
+    inset: -96px 0 auto;
+    height: 132px;
+    content: '';
+    clip-path: none;
+    pointer-events: none;
+    -webkit-mask: var(--tear-b) 0 0 / 100% 100% no-repeat;
+    mask: var(--tear-b) 0 0 / 100% 100% no-repeat;
+}
+.d-end::after { z-index: 0; background: var(--tear-underprint); transform: translate(-4px, -5px); }
+.d-end::before { z-index: 1; background: var(--yellow); }
+.d-end-inner { position: relative; z-index: 2; }
+.d-steel-section::before,
+.nc-paths::before {
+    top: -52px;
+    height: 88px;
+    clip-path: none;
+    pointer-events: none;
+    -webkit-mask: var(--tear-a) 0 0 / 100% 100% no-repeat;
+    mask: var(--tear-a) 0 0 / 100% 100% no-repeat;
+}
+.d-steel-section:nth-of-type(even)::before { -webkit-mask-image: var(--tear-b); mask-image: var(--tear-b); }
+.archive-top::after { height: 84px; clip-path: none; pointer-events: none; -webkit-mask: var(--tear-b) 0 0 / 100% 100% no-repeat; mask: var(--tear-b) 0 0 / 100% 100% no-repeat; }
+
+/* Homepage seam rises across the photograph. A second mask fills the sheet below it. */
+.nc-hero-floor::before,
+.nc-hero-floor::after {
+    position: absolute;
+    inset: -95px -1px 0;
+    content: '';
+    clip-path: none;
+    pointer-events: none;
+    -webkit-mask-image: var(--tear-diagonal), linear-gradient(#000, #000);
+    mask-image: var(--tear-diagonal), linear-gradient(#000, #000);
+    -webkit-mask-size: 100% 160px, 100% calc(100% - 158px);
+    mask-size: 100% 160px, 100% calc(100% - 158px);
+    -webkit-mask-position: top, bottom;
+    mask-position: top, bottom;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
+.nc-hero-floor::before { z-index: -1; background: var(--yellow); }
+.nc-hero-floor::after { z-index: -2; background: var(--tear-underprint); transform: translate(-5px, -5px); }
+.nc-show-image::before,
+.nc-show-image::after {
+    position: absolute;
+    inset: 0 -1px 0 auto;
+    width: 105px;
+    content: '';
+    clip-path: none;
+    pointer-events: none;
+    -webkit-mask: var(--tear-band) 0 0 / 100% 100% no-repeat;
+    mask: var(--tear-band) 0 0 / 100% 100% no-repeat;
+}
+.nc-show-image::before { background: var(--tear-underprint); transform: translateX(-4px); }
+.nc-show-image::after { background: var(--yellow); }
+
+@media (max-width: 760px) {
+    .hero-rupture { inset: auto 0 190px; width: 100%; height: 80px; overflow: visible; }
+    .hero-rupture::before, .hero-rupture::after, .rupture-underprint { -webkit-mask-image: var(--tear-a); mask-image: var(--tear-a); }
+    .hero-rupture::before { transform: translateY(6px) rotate(180deg); }
+    .rupture-underprint { transform: translateY(3px) rotate(180deg); }
+    .hero-rupture::after { transform: rotate(180deg); }
+    .rupture-scars { display: none; }
+    .d-hero::after { height: 65px; }
+    .d-end::before, .d-end::after { top: -62px; height: 92px; }
+    .d-steel-section::before, .nc-paths::before { top: -35px; height: 60px; }
+    .archive-top::after { height: 62px; }
+    .nc-hero-floor::before, .nc-hero-floor::after {
+        top: -80px;
+        -webkit-mask-size: 100% 120px, 100% calc(100% - 118px);
+        mask-size: 100% 120px, 100% calc(100% - 118px);
+    }
+    .nc-show-image::before, .nc-show-image::after {
+        inset: auto 0 -1px;
+        width: 100%;
+        height: 75px;
+        -webkit-mask-image: var(--tear-b);
+        mask-image: var(--tear-b);
+    }
+    .nc-show-image::before { transform: translateY(-4px); }
+}
+
+/* Older engines retain the original solid, angular silhouettes as a fallback. */
+@supports not ((mask-image: linear-gradient(#000, #000)) or (-webkit-mask-image: linear-gradient(#000, #000))) {
+    .rupture-scars, .rupture-underprint, .hero-rupture::before { display: none; }
+    .hero-rupture::after { clip-path: polygon(0 0,100% 0,80% 100%,0 100%); }
+}

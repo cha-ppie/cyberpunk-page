@@ -1,11 +1,17 @@
 {
-  "name": "syberpunk-night-city",
+  "name": "cyberpunk-night-city",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "assets:sync": "node scripts/sync-assets.mjs",
+    "dev:api": "vite --mode backend",
+    "backend": "mvn -o -gs backend/maven-offline.xml -s backend/maven-offline.xml -f backend/pom.xml spring-boot:run",
+    "test:backend": "mvn -o -gs backend/maven-offline.xml -s backend/maven-offline.xml -f backend/pom.xml test",
     "build": "vite build",
+    "build:api": "vite build --mode backend",
+    "build:backend": "mvn -o -gs backend/maven-offline.xml -s backend/maven-offline.xml -f backend/pom.xml package",
     "preview": "vite preview"
   },
   "dependencies": {

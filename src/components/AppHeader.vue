@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
   <!-- 桌面端主导航。 -->
   <header class="site-header" :class="{ scrolled }">
     <div class="header-inner">
-      <RouterLink class="brand" to="/" aria-label="Syberpunk 首页"><span class="brand-mark">//</span><span>SYBERPUNK</span><span class="brand-status" aria-hidden="true"></span></RouterLink>
+      <RouterLink class="brand" to="/" aria-label="Cyberpunk 首页"><span class="brand-mark">//</span><span>CYBERPUNK</span><span class="brand-status" aria-hidden="true"></span></RouterLink>
       <nav class="site-nav" aria-label="主导航">
         <RouterLink v-for="item in navigation" :key="item.to" class="nav-link" :to="item.to" active-class="active">{{ item.label }} <small>{{ item.subtitle }}</small></RouterLink>
       </nav>

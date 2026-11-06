@@ -1,0 +1,164 @@
+[
+  {
+    "image": "characters/V.jpg",
+    "title": "V / 远行",
+    "category": "人物",
+    "alt": "太空服中的 V",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-01"
+  },
+  {
+    "image": "characters/Judy.jpg",
+    "title": "朱迪 / 工作间",
+    "category": "人物",
+    "alt": "朱迪坐在工作间里",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-02"
+  },
+  {
+    "image": "characters/Johnny Silver Hand.png",
+    "title": "强尼·银手",
+    "category": "人物",
+    "alt": "黄底的强尼·银手肖像",
+    "width": 1728,
+    "height": 1080,
+    "id": "gallery-03"
+  },
+  {
+    "image": "city-photos/20260202000029_1.jpg",
+    "title": "城市 / 高处的光",
+    "category": "城市",
+    "alt": "V 站在巨型建筑的灯光下",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-04"
+  },
+  {
+    "image": "city-photos/20260202105333_1.jpg",
+    "title": "装备 / 武器陈列",
+    "category": "装备",
+    "alt": "墙上陈列的多种枪械",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-05"
+  },
+  {
+    "image": "city-photos/photomode_21012026_202313.png",
+    "title": "街头 / 雨后",
+    "category": "城市",
+    "alt": "雨后街头的人物与积水",
+    "width": 1920,
+    "height": 1080,
+    "id": "gallery-06"
+  },
+  {
+    "image": "characters/Song Zhaomei.jpg",
+    "title": "宋昭美 / 红色信号",
+    "category": "人物",
+    "alt": "红光中的宋昭美",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-07"
+  },
+  {
+    "image": "characters/Oda.jpg",
+    "title": "小田 / 利刃",
+    "category": "人物",
+    "alt": "红色刀光中的小田",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-08"
+  },
+  {
+    "image": "characters/Jack.png",
+    "title": "杰克 / 街头伙伴",
+    "category": "人物",
+    "alt": "杰克的近景肖像",
+    "width": 1920,
+    "height": 1080,
+    "id": "gallery-09"
+  },
+  {
+    "image": "places/Panam.png",
+    "title": "荒原 / 远处的城",
+    "category": "城市",
+    "alt": "帕南身后的荒原与城市天际线",
+    "width": 1920,
+    "height": 1080,
+    "id": "gallery-10"
+  },
+  {
+    "image": "characters/Rogue.jpg",
+    "title": "罗格 / 来生",
+    "category": "人物",
+    "alt": "酒吧灯光中的罗格",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-11"
+  },
+  {
+    "image": "characters/gallery (3).jpg",
+    "title": "V 与强尼 / 同行",
+    "category": "人物",
+    "alt": "V 与强尼坐在一起",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-12"
+  },
+  {
+    "image": "characters/Johnny.png",
+    "title": "街头 / 旧日回声",
+    "category": "人物",
+    "alt": "夜之城街头的人物合影",
+    "width": 1920,
+    "height": 1080,
+    "id": "gallery-13"
+  },
+  {
+    "image": "characters/Mobile Unit.jpg",
+    "title": "义体 / 重装",
+    "category": "装备",
+    "alt": "重型义体改造者",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-14"
+  },
+  {
+    "image": "places/20260130104420_1.jpg",
+    "title": "城市 / 手心的霓虹",
+    "category": "城市",
+    "alt": "伸向霓虹灯饰的义体手臂",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-15"
+  },
+  {
+    "image": "places/20260202120930_1.jpg",
+    "title": "装备 / 吉他",
+    "category": "装备",
+    "alt": "坐在沙发上弹吉他的人物",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-16"
+  },
+  {
+    "image": "city-photos/c6cd9e72bbb54dc7f120dee6cf59b3bb.jpg",
+    "title": "城市 / 车窗之外",
+    "category": "城市",
+    "alt": "从车内望向城市夜景",
+    "width": 1224,
+    "height": 688,
+    "id": "gallery-17"
+  },
+  {
+    "image": "places/20260616222833_1.jpg",
+    "title": "装备 / 手持终端",
+    "category": "装备",
+    "alt": "V 手中的发光终端",
+    "width": 2560,
+    "height": 1600,
+    "id": "gallery-18"
+  }
+]
