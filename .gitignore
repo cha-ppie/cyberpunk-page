@@ -2,6 +2,7 @@ node_modules/
 dist/
 backend/target/
 backend/data/
+backend/backups/
 data/
 .env.local
 .env.*.local

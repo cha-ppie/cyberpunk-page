@@ -6,7 +6,7 @@ import initialEntries from '../../content/gallery.json'
 import { useContent } from '../composables/useContent'
 import { imageUrl } from '../utils/assets'
 
-const entries = useContent('gallery', initialEntries, items => items.map(({ image, ...item }) => {
+const { content: entries, status } = useContent('gallery', initialEntries, items => items.map(({ image, ...item }) => {
   const { title } = item
   const [name, description] = title.split(' / ')
   const contextualPrefix = ['城市', '装备', '街头', '荒原', '义体'].includes(name)
@@ -55,8 +55,10 @@ onBeforeUnmount(() => { if (selected.value) document.body.style.overflow = previ
 <template>
   <main class="page-shell dossier archive-page">
     <section class="archive-top" aria-labelledby="page-title"><div class="d-wrap archive-top-inner"><div><h1 id="page-title">CITY ARCHIVE</h1><h2>视觉档案</h2></div><p>脸孔、义体、街头的光。<br>把这座城市，重新看一遍。</p></div></section>
-    <section class="d-wrap d-section"><div class="archive-meta"><div class="archive-filters" role="group" aria-label="筛选视觉档案"><button v-for="value in categories" :key="value" type="button" :aria-pressed="category === value" @click="filterCategory(value)">{{ value }}</button></div><p class="archive-count" aria-live="polite">{{ visibleEntries.length }} 幅画面 · 点击查看大图</p></div>
-      <p v-if="!visibleEntries.length" role="status">该分类暂无已发布的图片。</p>
+    <section class="d-wrap d-section"><div class="archive-meta"><div class="archive-filters" role="group" aria-label="筛选视觉档案"><button v-for="value in categories" :key="value" type="button" :aria-pressed="category === value" @click="filterCategory(value)">{{ value }}</button></div><p v-if="status === 'ready' && visibleEntries.length" class="archive-count" aria-live="polite">{{ visibleEntries.length }} 幅画面 · 点击查看大图</p></div>
+      <p v-if="status === 'loading'" role="status">正在加载视觉档案…</p>
+      <p v-else-if="status === 'error'" role="status">视觉档案加载失败，请刷新页面重试。</p>
+      <p v-else-if="!visibleEntries.length" role="status">该分类暂无已发布的图片。</p>
       <div class="archive-wall"><button v-for="(entry,index) in visibleEntries" :key="entry.src" class="archive-photo" type="button" :aria-label="'查看大图：' + entry.title" @click="openImage(index,$event)"><img :src="entry.src" :alt="entry.alt" :width="entry.width" :height="entry.height" loading="lazy"><span class="archive-caption"><span v-if="entry.captionPrefix" class="archive-caption-context">{{ entry.captionPrefix }} / </span><span class="archive-caption-title">{{ entry.captionTitle }}</span><span v-if="entry.captionSuffix" class="archive-caption-context"> / {{ entry.captionSuffix }}</span></span></button></div>
     </section>
     <DossierEnd title="照片之外，还有故事。" description="走近那些让夜之城被记住的人。" to="/edgerunners" action="浏览边缘行者" />

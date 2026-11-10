@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const menuOpen = ref(false)
 const scrolled = ref(false)
+const menuButton = ref(null)
 
 // 桌面端和移动端共用同一份导航配置，避免两处菜单内容不一致。
 const navigation = [
@@ -17,8 +18,12 @@ const navigation = [
 
 function updateHeader() { scrolled.value = window.scrollY > 64 }
 function closeMenu() { menuOpen.value = false }
-function handleKeydown(event) { if (event.key === 'Escape' && menuOpen.value) closeMenu() }
-
+function handleKeydown(event) {
+  if (event.key === 'Escape' && menuOpen.value) {
+    closeMenu()
+    menuButton.value?.focus()
+  }
+}
 // 进入新页面后自动收起移动端菜单。
 watch(() => route.fullPath, closeMenu)
 onMounted(() => {
@@ -42,7 +47,7 @@ onBeforeUnmount(() => {
       <nav class="site-nav" aria-label="主导航">
         <RouterLink v-for="item in navigation" :key="item.to" class="nav-link" :to="item.to" active-class="active">{{ item.label }} <small>{{ item.subtitle }}</small></RouterLink>
       </nav>
-      <button class="nav-toggle" :class="{ 'is-open': menuOpen }" type="button" :aria-expanded="menuOpen" aria-controls="mobile-panel" @click="menuOpen = !menuOpen"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span><span>菜单</span></button>
+      <button ref="menuButton" class="nav-toggle" :class="{ 'is-open': menuOpen }" type="button" :aria-expanded="menuOpen" aria-controls="mobile-panel" @click="menuOpen = !menuOpen"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span><span>菜单</span></button>
     </div>
   </header>
   <!-- 小屏幕导航面板；inert 会阻止隐藏状态下的元素获得焦点。 -->

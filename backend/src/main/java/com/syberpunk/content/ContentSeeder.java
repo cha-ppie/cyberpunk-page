@@ -20,7 +20,7 @@ public class ContentSeeder implements ApplicationRunner {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void run(ApplicationArguments args) throws Exception {
         // 栏目存在即表示已初始化；重启不覆盖编辑，也不会恢复已删除的资料。
         if (jdbc.queryForObject("SELECT COUNT(*) FROM categories", Integer.class) > 0) return;

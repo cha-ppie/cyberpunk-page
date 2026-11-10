@@ -34,7 +34,7 @@ const works = [
     ]
   }
 ]
-const activeWork = ref(1)
+const activeWork = ref(0)
 const work = computed(() => works[activeWork.value])
 const selectWork = (index) => { activeWork.value = index }
 </script>

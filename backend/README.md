@@ -93,11 +93,38 @@ npm run backend
 
 - Flyway 的 `db/migration/V1__content_schema.sql` 创建 `categories`、`articles`、`gallery_items`；后续表结构变更新增迁移文件，不修改已执行的迁移。
 - `content/*.json` 是首批数据和静态模式的共同来源：7 个城区、6 个流派、18 张图片。
-- 首次启动在事务中初始化空数据库；栏目已存在时跳过，重启不会覆盖修改或恢复删除的数据。
+- 首次启动在事务中初始化空数据库；导入失败会整体回滚。栏目已存在时跳过，重启不会覆盖修改或恢复删除的数据。
 - `articles.title`、`summary`、`image_path` 为基础字段，`content` 保存其余结构化 JSON；`gallery_items` 使用独立字段。
 - `published = FALSE` 的文章和图片不对外返回，`sort_order` 控制展示顺序。
 - 静态资料仅在首次初始化时导入，后续修改 JSON 不会自动覆盖数据库。
 - 管理员登录和内容后台已完成；标签、运行时图片上传、访客账号、收藏和评论属于后续阶段。
+
+### 本地 H2 备份和恢复
+
+在大批编辑或删除前，在后端终端按 `Ctrl+C` 停止服务，再从项目根目录备份。脚本在复制时独占源文件，校验 SHA-256，并拒绝覆盖已有文件。备份包含管理员账号和资料，请放在受保护的位置，重要备份另存到其他磁盘。
+
+```powershell
+$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$backup = "backend/backups/night-city-$stamp.mv.db"
+./backend/Copy-H2Database.ps1 -Source 'backend/data/night-city.mv.db' -Destination $backup
+```
+
+先把备份恢复到独立目录做演练。保留 `$backup`，或将它设为要恢复的备份文件路径。另开 PowerShell，从项目根目录运行下面的命令。验证实例使用 `8081`，不会使用原数据库文件。
+
+```powershell
+$backup = 'backend/backups/你的备份文件.mv.db'
+$restore = "backend/backups/restore-$(Get-Date -Format 'yyyyMMdd-HHmmss')/night-city.mv.db"
+./backend/Copy-H2Database.ps1 -Source $backup -Destination $restore
+$restorePath = (Resolve-Path -LiteralPath $restore).Path -replace '\.mv\.db$', ''
+$env:SPRING_PROFILES_ACTIVE = 'local'
+$env:SPRING_DATASOURCE_URL = "jdbc:h2:file:$restorePath;MODE=MySQL;DATABASE_TO_LOWER=TRUE;IFEXISTS=TRUE"
+$env:SERVER_PORT = '8081'
+npm run backend
+```
+
+在浏览器打开 `http://127.0.0.1:8081/api/health`，确认返回 `UP`。再查看 `http://127.0.0.1:8081/api/articles` 和 `http://127.0.0.1:8081/api/gallery`，确认备份里的资料符合预期。结束演练后关闭该终端，避免验证配置影响日常启动。
+
+正式恢复时，先停止日常后端，把现有的 `backend/data/night-city.mv.db` 改名留存，再用同一脚本把备份复制到原来的文件路径。用日常配置重新启动，确认后台资料和管理员登录都正常后，再决定是否清理旧文件。若使用 MySQL，请用 MySQL 的备份工具并在独立数据库中验证恢复。
 
 ## 验证与打包
 
@@ -106,9 +133,9 @@ npm run test:backend
 npm run build:backend
 ```
 
-默认测试使用隔离的内存数据库，13 项集成测试覆盖查询、分类筛选、初始化幂等、登录、会话与 CSRF、安全校验、草稿与发布、编辑和删除；同一套测试也在真实 MySQL 5.7 上验证。打包产物为 `backend/target/night-city-api-1.0.0.jar`。从 `backend` 目录启动该 jar，可保持本地数据库路径一致。
+默认测试使用隔离的 H2 内存数据库，覆盖查询、分类筛选、初始化幂等、导入失败回滚、登录、会话与 CSRF、草稿与发布、编辑和删除。GitHub Actions 会在拉取请求及推送到 `main` 时用 Java 17 执行 Maven `verify`。打包产物为 `backend/target/night-city-api-1.0.0.jar`。从 `backend` 目录启动该 jar，可保持本地数据库路径一致。
 
-如需在专用 MySQL 测试库重复执行相同的 13 项集成测试，先创建空数据库，并设置：
+如需用专用 MySQL 测试库执行 API 集成测试，先创建空数据库，并设置：
 
 ```powershell
 $env:TEST_DB_URL = 'jdbc:mysql://127.0.0.1:3306/night_city_test?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai'
@@ -125,4 +152,4 @@ npm run test:backend
 
 前端与 API 使用同一域名，将 `/api` 反向代理到后端。开发代理不会进入生产构建。后端默认仅监听本机，确需其他主机访问时通过 `SERVER_ADDRESS` 设置监听地址；端口可通过 `SERVER_PORT` 设置。GitHub Pages 仅能托管静态前端，不能运行 Java 后端。
 
-接口模式遇到网络失败或无效响应时使用本地资料，并在控制台记录提示；合法的空数组显示空状态。由于保留本地资料作为回退，这些数据不适合存放需要权限保护的内容。
+接口模式等待后端返回资料，网络失败或响应无效时显示加载失败；合法的空数组显示空状态。静态模式仍显示构建时随站点发布的公开资料。

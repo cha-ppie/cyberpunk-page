@@ -23,11 +23,15 @@ export default createRouter({
   history: createWebHashHistory(),
   routes,
   // 页面切换默认回到顶部；带锚点时平滑滚动到指定内容区。
-  scrollBehavior(to) {
-    if (to.hash) {
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash || savedPosition) {
       const headerHeight = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'), 10) || 72
       const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-      return { el: to.hash, top: headerHeight + 24, behavior }
+      if(savedPosition){
+      return savedPosition
+      }else{
+      return{ el: to.hash, top: headerHeight + 24, behavior }
+      }
     }
     return { top: 0, behavior: 'smooth' }
   }

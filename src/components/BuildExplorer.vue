@@ -5,7 +5,7 @@ import initialBuilds from '../../content/builds.json'
 import { useContent } from '../composables/useContent'
 import { moveTab } from '../utils/tabKeyboard'
 
-const builds = useContent('articles?category=guide', initialBuilds)
+const { content: builds, status } = useContent('articles?category=guide', initialBuilds)
 
 const activeIndex = ref(0)
 watch(builds, () => { activeIndex.value = Math.min(activeIndex.value, Math.max(0, builds.value.length - 1)) })
@@ -24,7 +24,9 @@ const selectBuild = (index) => { activeIndex.value = index }
         <span>{{ build.english }}</span><strong>{{ build.name }}</strong>
       </button>
     </div>
-    <p v-if="!selected" role="status">暂无已发布的攻略流派。</p>
+    <p v-if="status === 'loading'" role="status">正在加载攻略流派…</p>
+    <p v-else-if="status === 'error'" role="status">攻略流派加载失败，请刷新页面重试。</p>
+    <p v-else-if="!selected" role="status">暂无已发布的攻略流派。</p>
     <div v-if="selected" id="build-panel" class="build-panel" role="tabpanel" :aria-labelledby="`build-tab-${selected.id}`" tabindex="0">
       <div class="build-feature">
         <div class="build-scene">
