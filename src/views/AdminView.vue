@@ -103,7 +103,11 @@ async function save(published) {
     if (index < 0) lists[collection.value].push(saved)
     else lists[collection.value][index] = saved
     lists[collection.value].sort((a, b) => a.sortOrder - b.sortOrder || a.id.localeCompare(b.id))
-    setForm(saved); message.value = published ? '资料已发布，访客可查看最新内容。' : '已保存为草稿，访客无法查看。'
+    const wasPublished = form.value.published
+    setForm(saved)
+    message.value = published ? '已发布到资料库。公开站需重新导出并部署。'
+      : wasPublished ? '已从资料库下线。公开站需重新导出并部署。'
+      : '已保存为草稿。'
   })
 }
 function showDelete() { deleteDialog.value?.showModal() }
@@ -112,7 +116,8 @@ async function remove() {
   await run(async () => {
     await adminApi.remove(collection.value, editingId.value)
     lists[collection.value] = lists[collection.value].filter(item => item.id !== editingId.value)
-    closeDelete(); setForm(lists[collection.value][0] || null); message.value = '资料已删除。'
+    closeDelete(); setForm(lists[collection.value][0] || null)
+    message.value = '已从资料库删除。公开站需重新导出并部署。'
   })
 }
 function imageChanged() {
@@ -150,7 +155,7 @@ onMounted(async () => {
     <section v-else-if="!enabled" class="admin-login"><h1>内容管理</h1><p>当前站点未启用内容管理服务。</p><RouterLink to="/">返回网站</RouterLink></section>
     <section v-else-if="!user" class="admin-login"><h1>管理夜之城的档案。</h1><p>登录后维护世界观、攻略流派与视觉档案。</p><form @submit.prevent="login"><fieldset :disabled="busy"><label>管理员账号<input v-model="loginForm.username" name="username" autocomplete="username" required maxlength="64" autofocus></label><label>密码<input v-model="loginForm.password" name="password" type="password" autocomplete="current-password" required maxlength="72"></label><button class="admin-primary" type="submit">{{ busy ? '正在登录…' : '登录后台' }}</button></fieldset></form></section>
     <template v-else-if="user.role === 'ADMIN'">
-      <div class="admin-heading"><div><h1>内容工作台</h1><p>编辑资料，决定哪些故事被看见。</p></div><button type="button" :disabled="busy" @click="refresh">刷新列表</button></div>
+      <div class="admin-heading"><div><h1>内容工作台</h1><p>编辑资料 · <a class="admin-deploy-link" href="https://github.com/cha-ppie/cyberpunk-page/blob/main/README.md#发布到-github-pages" target="_blank" rel="noopener">公开站发布说明</a></p></div><button type="button" :disabled="busy" @click="refresh">刷新列表</button></div>
       <div class="admin-workspace" :aria-busy="busy">
         <section class="admin-list" aria-label="资料列表"><div class="admin-tabs" role="group" aria-label="内容类型"><button v-for="item in [['articles','世界与攻略'],['gallery','视觉档案']]" :key="item[0]" type="button" :aria-pressed="collection === item[0]" :disabled="busy" @click="switchCollection(item[0])">{{ item[1] }}</button></div>
           <div class="admin-filter"><label>搜索资料<input v-model="query" type="search" placeholder="标题或标识"></label><div><label>栏目<select v-model="categoryFilter"><option value="">全部栏目</option><option v-for="[value,label] in options" :key="value" :value="value">{{ label }}</option></select></label><label>状态<select v-model="statusFilter"><option value="">全部状态</option><option value="published">已发布</option><option value="draft">草稿</option></select></label></div></div>

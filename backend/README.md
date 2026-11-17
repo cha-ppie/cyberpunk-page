@@ -152,4 +152,4 @@ npm run test:backend
 
 前端与 API 使用同一域名，将 `/api` 反向代理到后端。开发代理不会进入生产构建。后端默认仅监听本机，确需其他主机访问时通过 `SERVER_ADDRESS` 设置监听地址；端口可通过 `SERVER_PORT` 设置。GitHub Pages 仅能托管静态前端，不能运行 Java 后端。
 
-接口模式等待后端返回资料，网络失败或响应无效时显示加载失败；合法的空数组显示空状态。静态模式仍显示构建时随站点发布的公开资料。
+接口模式等待后端返回资料，网络失败或响应无效时显示加载失败；合法的空数组显示空状态。GitHub Pages 从导出的已发布快照构建，操作步骤见 [发布到 GitHub Pages](../README.md#发布到-github-pages)。导出快照独立于初始化数据 `districts.json`、`builds.json`、`gallery.json`。

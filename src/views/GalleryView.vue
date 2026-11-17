@@ -4,14 +4,16 @@ import DossierEnd from '../components/DossierEnd.vue'
 import ArrowIcon from '../components/ArrowIcon.vue'
 import initialEntries from '../../content/gallery.json'
 import { useContent } from '../composables/useContent'
-import { imageUrl } from '../utils/assets'
+import { galleryThumbnail, imageUrl } from '../utils/assets'
+
+const thumbnailSizes = '(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) calc((100vw - 88px) / 2), (max-width: 1456px) calc((100vw - 144px) / 3), 438px'
 
 const { content: entries, status } = useContent('gallery', initialEntries, items => items.map(({ image, ...item }) => {
   const { title } = item
   const [name, description] = title.split(' / ')
   const contextualPrefix = ['城市', '装备', '街头', '荒原', '义体'].includes(name)
   return {
-    ...item, src: imageUrl(image),
+    ...item, original: image, thumbnail: galleryThumbnail(image),
     captionTitle: description && contextualPrefix ? description : name,
     captionPrefix: description && contextualPrefix ? name : '',
     captionSuffix: description && !contextualPrefix ? description : ''
@@ -59,9 +61,12 @@ onBeforeUnmount(() => { if (selected.value) document.body.style.overflow = previ
       <p v-if="status === 'loading'" role="status">正在加载视觉档案…</p>
       <p v-else-if="status === 'error'" role="status">视觉档案加载失败，请刷新页面重试。</p>
       <p v-else-if="!visibleEntries.length" role="status">该分类暂无已发布的图片。</p>
-      <div class="archive-wall"><button v-for="(entry,index) in visibleEntries" :key="entry.src" class="archive-photo" type="button" :aria-label="'查看大图：' + entry.title" @click="openImage(index,$event)"><img :src="entry.src" :alt="entry.alt" :width="entry.width" :height="entry.height" loading="lazy"><span class="archive-caption"><span v-if="entry.captionPrefix" class="archive-caption-context">{{ entry.captionPrefix }} / </span><span class="archive-caption-title">{{ entry.captionTitle }}</span><span v-if="entry.captionSuffix" class="archive-caption-context"> / {{ entry.captionSuffix }}</span></span></button></div>
+      <div class="archive-wall"><button v-for="(entry,index) in visibleEntries" :key="entry.id" class="archive-photo" type="button" :aria-label="'查看大图：' + entry.title" @click="openImage(index,$event)">
+        <img :src="entry.thumbnail.src" :srcset="entry.thumbnail.srcset" :sizes="thumbnailSizes" :alt="entry.alt" :width="entry.width" :height="entry.height" loading="lazy" decoding="async">
+        <span class="archive-caption"><span v-if="entry.captionPrefix" class="archive-caption-context">{{ entry.captionPrefix }} / </span><span class="archive-caption-title">{{ entry.captionTitle }}</span><span v-if="entry.captionSuffix" class="archive-caption-context"> / {{ entry.captionSuffix }}</span></span>
+      </button></div>
     </section>
     <DossierEnd title="照片之外，还有故事。" description="走近那些让夜之城被记住的人。" to="/edgerunners" action="浏览边缘行者" />
   </main>
-  <Teleport to="body"><dialog v-if="selected" ref="viewer" class="archive-dialog" aria-label="图片查看器" aria-describedby="image-caption" @cancel.prevent="closeImage" @click.self="closeImage" @keydown="handleViewerKey"><button ref="closeButton" class="archive-close" type="button" @click="closeImage">关闭 ×</button><button class="archive-prev" type="button" aria-label="上一张" @click="stepImage(-1)"><ArrowIcon style="transform: rotate(180deg)" /></button><img :src="selected.src" :alt="selected.alt"><p id="image-caption">{{ selected.title }} · {{ selectedIndex + 1 }} / {{ visibleEntries.length }}</p><button class="archive-next" type="button" aria-label="下一张" @click="stepImage(1)"><ArrowIcon /></button></dialog></Teleport>
+  <Teleport to="body"><dialog v-if="selected" ref="viewer" class="archive-dialog" aria-label="图片查看器" aria-describedby="image-caption" @cancel.prevent="closeImage" @click.self="closeImage" @keydown="handleViewerKey"><button ref="closeButton" class="archive-close" type="button" @click="closeImage">关闭 ×</button><button class="archive-prev" type="button" aria-label="上一张" @click="stepImage(-1)"><ArrowIcon style="transform: rotate(180deg)" /></button><img :src="imageUrl(selected.original)" :alt="selected.alt"><p id="image-caption">{{ selected.title }} · {{ selectedIndex + 1 }} / {{ visibleEntries.length }}</p><button class="archive-next" type="button" aria-label="下一张" @click="stepImage(1)"><ArrowIcon /></button></dialog></Teleport>
 </template>

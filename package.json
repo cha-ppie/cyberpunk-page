@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "assets:sync": "node scripts/sync-assets.mjs",
+    "content:export": "node scripts/export-published-content.mjs",
     "dev:api": "vite --mode backend",
     "backend": "mvn -o -gs backend/maven-offline.xml -s backend/maven-offline.xml -f backend/pom.xml spring-boot:run",
     "test:backend": "mvn -o -gs backend/maven-offline.xml -s backend/maven-offline.xml -f backend/pom.xml test",

@@ -1,16 +1,15 @@
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { imageUrl } from '../utils/assets'
 import initialBuilds from '../../content/builds.json'
 import { useContent } from '../composables/useContent'
+import { useContentSelection } from '../composables/useContentSelection'
 import { moveTab } from '../utils/tabKeyboard'
 
 const { content: builds, status } = useContent('articles?category=guide', initialBuilds)
 
-const activeIndex = ref(0)
-watch(builds, () => { activeIndex.value = Math.min(activeIndex.value, Math.max(0, builds.value.length - 1)) })
+const { activeIndex, unavailable, select: selectBuild } = useContentSelection(builds, 'build')
 const selected = computed(() => builds.value[activeIndex.value])
-const selectBuild = (index) => { activeIndex.value = index }
 </script>
 
 <template>
@@ -18,6 +17,7 @@ const selectBuild = (index) => { activeIndex.value = index }
     <div class="build-explorer-heading">
       <h2 id="build-heading">找到你的打法。</h2>
       <p>选一种战斗节奏，看看装备如何配合。也可以从两种方向里，各拿走一部分。</p>
+      <p v-if="status === 'ready' && selected && unavailable" role="status">链接中的流派已不可用，已显示当前可查阅的流派。</p>
     </div>
     <div class="build-choices" role="tablist" aria-label="选择玩法方向">
       <button v-for="(build, index) in builds" :id="`build-tab-${build.id}`" :key="build.id" type="button" role="tab" :aria-selected="activeIndex === index" :tabindex="activeIndex === index ? 0 : -1" aria-controls="build-panel" @click="selectBuild(index)" @keydown="moveTab($event, index, builds.length, selectBuild)">

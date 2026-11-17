@@ -24,15 +24,19 @@ export default createRouter({
   routes,
   // 页面切换默认回到顶部；带锚点时平滑滚动到指定内容区。
   scrollBehavior(to, from, savedPosition) {
-    if (to.hash || savedPosition) {
+    if (savedPosition) return savedPosition
+    // 栏目内切换资料只更新网址，保留当前阅读位置。
+    if (to.path === from.path && to.hash === from.hash && to.fullPath !== from.fullPath) return false
+
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    const target = to.hash || (
+      to.name === 'world' && typeof to.query.district === 'string' ? '#districts' :
+      to.name === 'guide' && typeof to.query.build === 'string' ? '#builds' : ''
+    )
+    if (target) {
       const headerHeight = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'), 10) || 72
-      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-      if(savedPosition){
-      return savedPosition
-      }else{
-      return{ el: to.hash, top: headerHeight + 24, behavior }
-      }
+      return { el: target, top: headerHeight + 24, behavior }
     }
-    return { top: 0, behavior: 'smooth' }
+    return { top: 0, behavior }
   }
 })

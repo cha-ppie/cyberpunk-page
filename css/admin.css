@@ -18,6 +18,7 @@
 .admin-heading { padding: 38px 0 30px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .admin-heading h1 { color: #fcee09; font: 600 clamp(28px, 4vw, 40px)/1.2 var(--display); margin: 0 0 12px; }
 .admin-heading p, .admin-login > p { color: #a9b3b7; font-size: 14px; line-height: 1.8; margin: 0; }
+.admin-deploy-link { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .admin-workspace { display: grid; grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); gap: 40px; align-items: start; max-width: 1400px; margin: 0 auto; }
 .admin-tabs { display: flex; border-bottom: 2px solid #fcee09; }
 .admin-tabs button { flex: 1; border: 0; padding: 16px 8px; }

@@ -1,9 +1,14 @@
 import { onMounted, onBeforeUnmount, shallowRef } from 'vue'
+import { isContentList } from '../utils/contentSchema'
+
+const resources = { 'articles?category=world': 'districts', 'articles?category=guide': 'builds', gallery: 'gallery' }
+const snapshots = import.meta.glob('../../content/published.json', { eager: true, import: 'default' })
+const published = snapshots['../../content/published.json']
 
 // 静态托管继续使用随构建发布的内容；开发/服务部署可启用 API。
 export function useContent(resource, staticItems, transform = items => items) {
   const apiEnabled = import.meta.env.VITE_API_ENABLED === 'true'
-  const content = shallowRef(apiEnabled ? [] : transform(staticItems))
+  const content = shallowRef(apiEnabled ? [] : transform(published?.[resources[resource]] ?? staticItems))
   const status = shallowRef(apiEnabled ? 'loading' : 'ready')
   const controller = new AbortController()
   let disposed = false
@@ -18,12 +23,7 @@ export function useContent(resource, staticItems, transform = items => items) {
       })
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
       const items = await response.json()
-      const fields = Object.entries(staticItems[0] ?? {})
-      if (!Array.isArray(items) || items.some(item => !item || fields.some(([key, value]) =>
-        Array.isArray(value) ? !Array.isArray(item[key]) : typeof item[key] !== typeof value
-      )) || new Set(items.map(item => item.id)).size !== items.length) {
-        throw new Error('Invalid content response')
-      }
+      if (!isContentList(items, staticItems[0])) throw new Error('Invalid content response')
       if (!disposed) {
         content.value = transform(items)
         status.value = 'ready'

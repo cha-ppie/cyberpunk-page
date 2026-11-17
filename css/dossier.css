@@ -75,6 +75,8 @@
 .attribute-detail { align-self: center; padding: 45px; background: var(--yellow); color: var(--void); clip-path: polygon(0 0, 100% 0, 100% 94%, 92% 100%, 0 100%); }
 .attribute-detail p { margin-top: 25px; }
 .attribute-detail small { display: block; margin-top: 25px; font-size: 14px; line-height: 1.8; }
+.attribute-guide { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.attribute-guide:focus-visible { outline-color: var(--void); }
 .ware-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 55px; border-top: 3px solid var(--yellow); }
 .ware-item { padding: 30px 0; border-bottom: 1px solid #344047; }
 .ware-item small { color: var(--yellow); }

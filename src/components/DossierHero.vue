@@ -23,7 +23,7 @@ defineProps({
       <div class="d-hero-copy">
         <h2>{{ subtitle }}</h2>
         <p>{{ description }}</p>
-        <RouterLink v-if="jump" class="d-action" :to="{ hash: jump }">{{ action }} <ArrowIcon /></RouterLink>
+        <RouterLink v-if="jump" class="d-action" :to="{ query: $route.query, hash: jump }">{{ action }} <ArrowIcon /></RouterLink>
       </div>
     </div>
   </section>
